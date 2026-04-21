@@ -10,12 +10,14 @@ public class PlayerController : MonoBehaviour
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
+    private Animator pAni;
     private bool isGrounded;
     private float moveInput;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        pAni = GetComponent<Animator>();
     } 
 
     // Update is called once per frame
@@ -43,6 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            pAni.SetTrigger("Jump");
         }
     }
 
@@ -56,6 +59,11 @@ public class PlayerController : MonoBehaviour
             if (collision.CompareTag("Finish"))
             {
                 collision.GetComponent<LevelObject>().MoveToNextLevel();
+            }
+
+            if (collision.CompareTag("Enemy"))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 }
