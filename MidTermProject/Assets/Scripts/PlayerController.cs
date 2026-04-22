@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator pAni;
     private bool isGrounded;
+
+    private bool isInvicible = false;
+
     private float moveInput;
 
     private void Awake()
@@ -29,6 +32,8 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         else if (moveInput < 0)
             transform.localScale = new Vector3(-1, 1, 1);
+
+
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
     }
@@ -50,9 +55,10 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
-        {
+    {
             if (collision.CompareTag("Respawn"))
             {
+                if (isInvicible) return;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
 
@@ -63,7 +69,20 @@ public class PlayerController : MonoBehaviour
 
             if (collision.CompareTag("Enemy"))
             {
+                if (isInvicible) return;
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+
+            if (collision.CompareTag("InvincibleItem"))
+        {
+            isInvicible = true;
+            Destroy(collision.gameObject);
+            Invoke("Invicible", 3f);
         }
+    }
+
+    void InvicibleDisable()
+    {
+        isInvicible = false;
     }
 }
