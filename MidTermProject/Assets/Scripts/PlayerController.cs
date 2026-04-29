@@ -17,10 +17,13 @@ public class PlayerController : MonoBehaviour
 
     private float moveInput;
 
+    float score;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         pAni = GetComponent<Animator>();
+        score = 0f;
     } 
 
     // Update is called once per frame
@@ -64,6 +67,7 @@ public class PlayerController : MonoBehaviour
 
             if (collision.CompareTag("Finish"))
             {
+                HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
                 collision.GetComponent<LevelObject>().MoveToNextLevel();
             }
 
@@ -74,11 +78,16 @@ public class PlayerController : MonoBehaviour
             }
 
             if (collision.CompareTag("InvincibleItem"))
-        {
+            {
+            score += 10f;
             isInvicible = true;
             Destroy(collision.gameObject);
             Invoke("Invicible", 3f);
-        }
+            }
+
+            if(collision.CompareTag("Item"))
+            {
+            }
     }
 
     void InvicibleDisable()
