@@ -362,6 +362,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ScoreTest
   stage1: {fileID: 662888619}
   stage2: {fileID: 904080477}
+  stage3: {fileID: 196062287}
+  stage4: {fileID: 870263600}
+  stage5: {fileID: 924302265}
 --- !u!4 &172376531
 Transform:
   m_ObjectHideFlags: 0
