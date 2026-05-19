@@ -9,6 +9,8 @@ public class RankPage : MonoBehaviour
 
     StageResultList allData;
 
+    int currentStage = 1;
+
     void Awake()
     {
         allData = StageResultSaver.LoadRank();
@@ -24,7 +26,10 @@ public class RankPage : MonoBehaviour
 
         Debug.Log(allData.results.Count);
         //랭크 데이터 정렬
-        var sortedData = allData.results.Where(r => r.stage == 1).OrderByDescending(x => x.score).ToList();
+        var sortedData = allData.results
+            .Where(r => r.stage == currentStage)
+            .OrderByDescending(x => x.score)
+            .ToList();
 
         Debug.Log(sortedData.Count);
         //랭크 데이터 생성
@@ -34,5 +39,31 @@ public class RankPage : MonoBehaviour
             TMP_Text rankText = row.GetComponentInChildren<TMP_Text>();
             rankText.text = $"{i + 1}. {sortedData[i].playerName} - {sortedData[i].score}";
         }
+    }
+
+    // Stage1 버튼
+    public void OnClickStage1()
+    {
+        currentStage = 1;
+        RefreshRankList();
+    }
+
+    // Stage2 버튼
+    public void OnClickStage2()
+    {
+        currentStage = 2;
+        RefreshRankList();
+    }
+
+    // Stage3 버튼
+    public void OnClickStage3()
+    {
+        currentStage = 3;
+        RefreshRankList();
+    }
+    public void ChangeStage(int stage)
+    {
+        currentStage = stage;
+        RefreshRankList();
     }
 }

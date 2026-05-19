@@ -45,8 +45,10 @@ public static class StageResultSaver
     {
         if (!File.Exists(filePath))
             return new StageResultList();
+
         string json = File.ReadAllText(filePath);
         StageResultList list = JsonUtility.FromJson<StageResultList>(json);
+
         if (list == null)
             return new StageResultList();
         else

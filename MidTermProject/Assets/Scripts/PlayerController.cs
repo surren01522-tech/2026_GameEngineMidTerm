@@ -88,7 +88,11 @@ public class PlayerController : MonoBehaviour
 
             if(collision.CompareTag("Item"))
             {
-            }
+            isInvicible = true;
+            score += collision.GetComponent<ItemObject>().GetPoint();
+            Destroy(collision.gameObject);
+
+        }
     }
 
     void InvicibleDisable()
